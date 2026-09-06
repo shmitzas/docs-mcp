@@ -15,7 +15,7 @@ Contents:
 **Docs refresh automatically on every container start.** The server kicks
 off `/app/update-all.sh` in a background thread as it comes up, so the MCP
 port is available immediately and the index hot-reloads as each source
-(swiftlys2 / source2 / GameTracking-CS2) finishes downloading. Set up a
+(swiftlys2 / source2 / CS2-Dumps) finishes downloading. Set up a
 daily **Restart** schedule (section 5 below) and you're done — no console
 commands required.
 
@@ -86,9 +86,12 @@ docker buildx build \
    default; if you allocate `:9000` you must also set the `Port` variable to
    `9000` on the server's Startup tab so `EXPOSE`/`--host 0.0.0.0` match).
 4. Resources: 256 MB RAM / 0.5 CPU is enough for a small deployment; bump to
-   1 GB / 1 CPU if you index the full GameTracking-CS2 tree (hundreds of
-   thousands of files).
-5. Disk: allow **at least 3 GB** — GameTracking-CS2 alone is ~1 GB shallow-cloned.
+   1 GB / 1 CPU if you enable the optional `install/` mirror in
+   `update-cs2-dumps.sh` (hundreds of extra files).
+5. Disk: allow **at least 1 GB** — the default CS2-Dumps mirror
+   (`dump/`, `protobufs/`, `strings/`, `manifests/`) plus the Source 2
+   wiki and SwiftlyS2 docs together sit under ~200 MB. Bump to 3 GB if
+   you also enable the optional `install/` mirror.
 6. **Create Server** and let the install script finish.
 
 ---
@@ -99,8 +102,8 @@ Hit **Start**. On the console you'll see something like:
 
 ```
 [entrypoint] /home/container/docs is empty — first-boot fetch has been queued
-[entrypoint] and may take several minutes (GameTracking-CS2 is a
-[entrypoint] ~1 GB shallow clone). The MCP server is available now;
+[entrypoint] and may take a minute or two (CS2-Dumps + Source 2 wiki
+[entrypoint] shallow clones). The MCP server is available now;
 [entrypoint] the index will hot-reload as each source finishes.
 [startup] auto-refresh: docs update queued in the background
 Documentation MCP server ready on port 8080
@@ -116,8 +119,8 @@ seconds, before the update finishes. Clients can already connect; they'll
 see an empty index at first, and each source's docs appear as its updater
 completes and the atomic reindex fires.
 
-First-boot total time is typically 5–10 minutes (dominated by the
-GameTracking-CS2 clone). Subsequent restarts do delta fetches and finish
+First-boot total time is typically 1–3 minutes (dominated by the
+CS2-Dumps clone). Subsequent restarts do delta fetches and finish
 in under a minute.
 
 Any markdown you drop into `/home/container/docs/<category>/*.md` via the

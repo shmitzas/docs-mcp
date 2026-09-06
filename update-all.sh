@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 scripts=(
   update-swiftlys2.sh
   update-source2.sh
-  update-cs2-gametracking.sh
+  update-cs2-dumps.sh
 )
 
 fail=0

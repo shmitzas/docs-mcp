@@ -3,9 +3,9 @@
 CS2 Docs MCP Server
 
 This MCP server provides documentation search capabilities for CS2-related
-documentation (SwiftlyS2, Source 2, GameTracking-CS2, and friends) stored in
-the docs/ directory. It allows GitHub Copilot and other MCP clients to search
-and retrieve documentation content.
+documentation (SwiftlyS2, the Source 2 Wiki, Swiftly-Tracker/CS2-Dumps, and
+friends) stored in the docs/ directory. It allows GitHub Copilot and other
+MCP clients to search and retrieve documentation content.
 """
 
 import asyncio
@@ -29,7 +29,7 @@ mcp = FastMCP(
     name="CS2 Docs MCP",
     instructions=(
         "Use this server to search and retrieve CS2-related documentation "
-        "(SwiftlyS2, Source 2, GameTracking-CS2, plus supporting projects). "
+        "(SwiftlyS2, the Source 2 Wiki, Swiftly-Tracker/CS2-Dumps, plus supporting projects). "
         "IMPORTANT USAGE RULES:\n"
         "1. NEVER guess document paths. Always obtain paths from browse_category or search_documentation results.\n"
         "2. DISCOVERY WORKFLOW: Call list_documentation_categories to see available categories, "

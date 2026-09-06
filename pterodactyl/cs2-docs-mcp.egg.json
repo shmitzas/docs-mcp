@@ -7,7 +7,7 @@
     "exported_at": "2026-07-18T00:00:00+00:00",
     "name": "CS2 Docs MCP Server",
     "author": "shmitzas@example.com",
-    "description": "Remote MCP server (FastMCP over SSE) that indexes CS2-related markdown docs — SwiftlyS2, Source 2, GameTracking-CS2, and friends — and exposes search/browse tools to MCP clients like Claude Desktop, Cursor, and VS Code Copilot. Includes daily update scripts for swiftlys2, source2, and GameTracking-CS2 — trigger with the 'update-docs' console command (or a daily 04:00 schedule) and the index hot-reloads without restarting.",
+    "description": "Remote MCP server (FastMCP over SSE) that indexes CS2-related markdown docs — SwiftlyS2, the Source 2 Wiki, Swiftly-Tracker/CS2-Dumps, and friends — and exposes search/browse tools to MCP clients like Claude Desktop, Cursor, and VS Code Copilot. Includes daily update scripts for swiftlys2, source2, and CS2-Dumps — trigger with the 'update-docs' console command (or a daily 04:00 schedule) and the index hot-reloads without restarting.",
     "features": null,
     "docker_images": {
         "cs2-docs-mcp (ghcr.io)": "ghcr.io/shmitzas/cs2-docs-mcp:latest"

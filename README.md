@@ -1,6 +1,6 @@
 # CS2 Docs MCP Server
 
-This repository provides a production-ready **remote MCP server** for searching and retrieving CS2-related technical documentation via any compatible MCP client (like Claude Desktop, Cursor, Windsurf, VS Code Copilot, or Visual Studio). Powered by the `FastMCP` framework, it enables AI assistants to access documentation for [SwiftlyS2](https://swiftlys2.net/), Source 2, GameTracking-CS2, and supporting projects.
+This repository provides a production-ready **remote MCP server** for searching and retrieving CS2-related technical documentation via any compatible MCP client (like Claude Desktop, Cursor, Windsurf, VS Code Copilot, or Visual Studio). Powered by the `FastMCP` framework, it enables AI assistants to access documentation for [SwiftlyS2](https://swiftlys2.net/), the [Source 2 Wiki](https://www.source2.wiki/), [Swiftly-Tracker/CS2-Dumps](https://github.com/Swiftly-Tracker/CS2-Dumps), and supporting projects.
 
 Documentation lives under `docs/` as Markdown; the codebase is modular and easy to extend for additional documentation sets.
 
@@ -240,7 +240,7 @@ Three updater scripts pull the latest content from upstream into `docs/`:
 | --- | --- | --- |
 | `update-swiftlys2.sh` | `https://swiftlys2.net/llms-full.txt` | `docs/swiftlys2/` |
 | `update-source2.sh` | `github.com/Source2Wiki/Source2Wiki` | `docs/source2/` |
-| `update-cs2-gametracking.sh` | `github.com/SteamTracking/GameTracking-CS2` | `docs/counter-strike-2/GameTracking-CS2/` |
+| `update-cs2-dumps.sh` | `github.com/Swiftly-Tracker/CS2-Dumps` | `docs/counter-strike-2/CS2-Dumps/` |
 | `update-all.sh` | (runs all three) | — |
 
 Requirements on the host: `bash`, `curl`, `git`, `awk`, `flock`, `sed` — everything ships with a base Debian install.
@@ -251,7 +251,8 @@ Wire up on Debian:
 chmod +x update-*.sh
 mkdir -p logs
 
-# Test once manually first — the CS2 tracking clone downloads ~160 MB
+# Test once manually first — the CS2-Dumps clone is ~30-100 MB (dump/, protobufs/,
+# strings/, manifests/ only; install/ is skipped by default).
 ./update-all.sh
 ```
 
@@ -267,8 +268,8 @@ Each script uses `flock` so overlapping cron runs cannot collide. `update-all.sh
 Notes:
 - The swiftlys2 splitter writes to a staging dir and atomically swaps in, so a mid-run failure never leaves the live tree half-populated.
 - The source2 script shallow-clones into `.cache/source2wiki/` (gitignored) and mirrors only the doc-content subdirectories, skipping Docusaurus TS/CSS.
-- The CS2 tracking script does a shallow clone on first run; subsequent runs do a delta `git fetch --depth 1`. Expect several hundred MB of on-disk footprint.
-- If you have an old manually-extracted `docs/counter-strike-2/GameTracking-CS2-master/` alongside the new git checkout, delete it once you have verified the new mirror.
+- The CS2-Dumps script shallow-clones into `.cache/cs2-dumps/` (gitignored) and mirrors only `dump/`, `protobufs/`, `strings/`, `manifests/` and the README — the raw `install/` depot content is skipped by default. Add it to `CONTENT_ITEMS` in the script if you need extracted KV3/config lookups.
+- **Migrating from the old GameTracking-CS2 mirror?** CS2-Dumps supersedes it (cleaner JSON, dedup'd protobufs, adds binary `strings/`). Once you have verified the new mirror, delete `docs/counter-strike-2/GameTracking-CS2/` and any legacy `docs/counter-strike-2/GameTracking-CS2-master/` to reclaim disk and drop stale content from the index.
 
 ## Troubleshooting
 

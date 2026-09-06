@@ -34,7 +34,7 @@ COPY --chown=container:container doc-server.py            /app/
 COPY --chown=container:container update-all.sh            /app/
 COPY --chown=container:container update-swiftlys2.sh      /app/
 COPY --chown=container:container update-source2.sh        /app/
-COPY --chown=container:container update-cs2-gametracking.sh /app/
+COPY --chown=container:container update-cs2-dumps.sh      /app/
 COPY --chown=container:container pterodactyl/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/*.sh
 

@@ -17,8 +17,8 @@ mkdir -p "$DOCS_ROOT" "$CACHE_ROOT"
 
 if [ -z "$(ls -A "$DOCS_ROOT" 2>/dev/null)" ]; then
     echo "[entrypoint] $DOCS_ROOT is empty — first-boot fetch has been queued"
-    echo "[entrypoint] and may take several minutes (GameTracking-CS2 is a"
-    echo "[entrypoint] ~1 GB shallow clone). The MCP server is available now;"
+    echo "[entrypoint] and may take a minute or two (CS2-Dumps + Source 2 wiki"
+    echo "[entrypoint] shallow clones). The MCP server is available now;"
     echo "[entrypoint] the index will hot-reload as each source finishes."
 fi
 
